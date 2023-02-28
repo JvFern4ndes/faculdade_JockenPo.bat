@@ -1,0 +1,202 @@
+@echo off
+title Projeto Jo Ken Po
+mode 80,40
+color 0b
+
+:login
+cls
+echo.
+echo ===================================
+set /p nm= Digite o Nome do Jogador: 
+echo ===================================
+echo.
+if %nm% == not exist ( goto:login ) else ( goto:inicio 
+)
+pause > ("")
+echo.
+set vitoria=0
+set derrota=0
+set empate=0
+
+
+:inicio
+color 0b
+cls
+echo ===================================
+echo    Nome do Jogador: %nm%         
+echo ===================================
+echo.
+echo.
+echo ===================================
+echo      Bem Vindo ao Jo-Ken-po      
+echo ===================================
+echo.
+echo.
+echo ===================================
+echo [1] PEDRA
+echo [2] PAPEL
+echo [3] TESOURA
+echo [4] LAGARTO
+echo [5] SPOCK
+echo [6] ENCERRAR JOGO
+echo [R] REGRAS
+echo ===================================
+echo.
+echo.
+echo ===================================
+echo Vitorias: %vitoria%
+echo Derretoas: %derrota%
+echo Empates: %empate%
+echo ===================================
+echo.
+set /p op= Digite uma opcao:
+
+if %op% == 1 (goto:jogo)
+if %op% == 2 (goto:jogo)
+if %op% == 3 (goto:jogo)
+if %op% == 4 (goto:jogo)
+if %op% == 5 (goto:jogo)
+if %op% == 6 (exit)
+if %op% == R (goto:regras) else ( 
+echo.
+echo ===================================
+echo      Opcao Invalida !!
+echo ===================================
+echo.
+pause 
+goto :inicio )
+
+
+
+:jogo
+if %op% == 1 echo Voce escolheu Pedra
+if %op% == 2 echo Voce escolheu Papel
+if %op% == 3 echo Voce escolheu Tesoura
+if %op% == 4 echo Voce escolheu Lagarto
+if %op% == 5 echo Voce escolheu Spock
+pause > ("")
+set /a ec=(%Random% %% 5) + 1
+if  %ec% == 1 goto :pedra
+if  %ec% == 2 goto :papel
+if  %ec% == 3 goto :tesoura
+if  %ec% == 4 goto :lagarto
+if  %ec% == 5 goto :spock
+
+
+:pedra
+echo A CPU Escolheu Pedra
+pause  > ("")
+if  %op% == 1 goto :empate
+if  %op% == 2 goto :vitoria
+if  %op% == 3 goto :derrota
+if  %op% == 4 goto :derrota
+if  %op% == 5 goto :vitoria
+
+:papel
+echo A CPU Escolheu Papel
+pause  > ("")
+if  %op% == 1 goto :derrota
+if  %op% == 2 goto :empate
+if  %op% == 3 goto :vitoria
+if  %op% == 4 goto :vitoria
+if  %op% == 5 goto :derrota
+
+:tesoura
+echo A CPU Escolheu Tesoura
+pause  > ("")
+if  %op% == 1 goto :vitoria
+if  %op% == 2 goto :derrota
+if  %op% == 3 goto :empate
+if  %op% == 4 goto :derrota
+if  %op% == 5 goto :vitoria
+
+:lagarto
+echo A CPU Escolheu Lagarto
+pause  > ("")
+if  %op% == 1 goto :vitoria
+if  %op% == 2 goto :derrota
+if  %op% == 3 goto :vitoria
+if  %op% == 4 goto :empate
+if  %op% == 5 goto :derrota
+
+:spock
+echo A CPU Escolheu Spock
+pause  > ("")
+if  %op% == 1 goto :derrota
+if  %op% == 2 goto :vitoria
+if  %op% == 3 goto :vitoria
+if  %op% == 4 goto :derrota
+if  %op% == 5 goto :empate
+
+:regras 
+echo.
+echo ==========================================================================
+echo.
+echo                                   PEDRA :
+echo.
+echo Empata com: Pedra / Ganha de: Tesoura e Lagarto / Perde de: Spock e Papel.
+echo.
+echo ==========================================================================
+echo.
+echo                                   PAPEL :
+echo.
+echo Empata com: Papel / Ganha de: Pedra e Spock / Perde de: Tesoura e Lagarto.
+echo.
+echo ==========================================================================
+echo.
+echo                                   TESOURA :
+echo.
+echo Empata com: Tesoura / Ganha de: Lagarto e Papel / Perde de: Spock e Pedra.
+echo.
+echo ==========================================================================
+echo.
+echo                                   LAGARTO :
+echo.
+echo Empata com: Lagarto / Ganha de: Spock e Papel / Perde de: Tesoura e Pedra.
+echo.
+echo ==========================================================================
+echo.
+echo                                   SPOCK :
+echo.
+echo Empata com: Spock / Ganha de: Tesoura e Pedra / Perde de: Lagarto e Papel.
+echo.
+echo ==========================================================================
+pause > ("")
+set /p rg=Deseja Voltar ao Jogo [S/N]:
+if %rg%	== S (goto inicio) else (exit)
+
+:empate
+color 0e
+echo.
+echo ==================================
+echo               Empate
+echo ==================================
+set /a empate=%empate% + 1
+pause  > ("")
+set /p resp=Deseja jogar novamente [S/N]:
+if /i %resp% == S ( goto:inicio) else ( exit )
+
+
+
+:derrota
+color 0c	
+echo.
+echo ==================================
+echo            Voce Perdeu !!
+echo ==================================
+set /a derrota=%derrota% + 1
+pause  > ("")
+set /p resp=Deseja jogar novamente [S/N]:
+if /i %resp% == S ( goto:inicio) else ( exit )
+
+
+:vitoria
+color 0a
+echo.
+echo ==================================
+echo            Voce Ganhou !!
+echo ==================================
+set /a vitoria=%vitoria% + 1
+pause  > ("")
+set /p resp=Deseja jogar novamente [S/N]:
+if /i %resp% == S ( goto:inicio) else ( exit )
